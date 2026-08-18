@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#58cc02"><title>LinguaGo V5</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f7f7f7;color:#333}button{font:inherit;cursor:pointer}
+header{height:68px;background:#fff;border-bottom:2px solid #ddd;display:flex;align-items:center;justify-content:space-between;padding:0 16px;position:sticky;top:0;z-index:10}.logo{font-size:27px;font-weight:900;color:#58a700}.stats{display:flex;gap:10px;font-weight:800;font-size:13px}
+main{max-width:850px;margin:auto;padding:20px 16px 100px}.page{display:block}.hidden{display:none!important}.card{background:#fff;border:2px solid #ddd;border-radius:18px;padding:20px;margin-bottom:15px}
+h1{font-size:34px;margin:7px 0}h2{margin:4px 0}p{line-height:1.45}.muted{color:#777}.tag{font-size:12px;font-weight:900;color:#58a700;letter-spacing:1px}
+.btn{width:100%;border:0;border-bottom:4px solid #46a000;background:#58cc02;color:#fff;border-radius:13px;padding:15px;font-weight:900}.secondary{background:#fff;border:2px solid #ccc;border-bottom:4px solid #aaa;border-radius:12px;padding:12px;font-weight:800}
+.hero{display:grid;grid-template-columns:1fr 250px;gap:20px;align-items:center}.categories{display:grid;gap:14px}.category{background:#fff;border:2px solid #ddd;border-radius:18px;padding:18px}.category h2{font-size:20px}.coursegrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:13px}.course{background:#fafafa;border:2px solid #ddd;border-radius:14px;padding:15px;text-align:left}.course:hover{border-color:#58cc02}.flag{font-size:32px;display:block;margin-bottom:7px}.course b,.course small{display:block}.course small{color:#888;margin-top:3px}
+.selectedCourse{display:flex;align-items:center;gap:13px}.courseIcon{font-size:42px}.grow{flex:1}.change{white-space:nowrap}
+.path{display:grid;gap:10px}.node{display:flex;align-items:center;gap:12px;background:#fff;border:2px solid #ddd;border-radius:15px;padding:13px;text-align:left}.nodecircle{width:46px;height:46px;border-radius:50%;background:#58cc02;color:#fff;display:grid;place-items:center;font-weight:900;flex:none}.node.done .nodecircle{background:#ffc800}.node.locked{opacity:.5}.nodeinfo{flex:1}.nodeinfo b,.nodeinfo small{display:block}.nodeinfo small{color:#888;margin-top:3px}
+.progress{height:12px;background:#e5e5e5;border-radius:20px;overflow:hidden}.fill{height:100%;width:0;background:#58cc02;transition:.3s}
+nav{position:fixed;bottom:0;left:0;right:0;height:72px;background:#fff;border-top:2px solid #ddd;display:flex;justify-content:center;gap:42px;z-index:20}nav button{border:0;background:none;color:#777;font-weight:800}nav button.active{color:#58a700}nav small{display:block;font-size:10px;margin-top:3px}
+.lessonTop{display:flex;align-items:center;gap:10px;margin-bottom:20px}.lessonTop .progress{flex:1}.close{border:0;background:none;font-size:28px;color:#777}.question h2{font-size:28px;line-height:1.35}.label{font-size:12px;font-weight:900;color:#777;letter-spacing:1px}.answers{display:grid;gap:10px;margin-top:20px}.answer{background:#fff;border:2px solid #ccc;border-bottom:4px solid #aaa;border-radius:12px;padding:16px;text-align:left;font-weight:800}.answer.correct{background:#dff8c8;border-color:#58cc02}.answer.wrong{background:#ffe0e0;border-color:#ff4b4b}.feedback{display:none;margin-top:14px;padding:14px;border-radius:12px;font-weight:800}.feedback.show{display:block}.good{background:#dff8c8}.bad{background:#ffe0e0}
+.words{display:flex;flex-wrap:wrap;gap:8px;margin:17px 0}.word{background:#fff;border:2px solid #ccc;border-bottom:4px solid #aaa;border-radius:10px;padding:11px;font-weight:800}.answerline{min-height:55px;border:2px dashed #bbb;border-radius:12px;padding:9px;display:flex;gap:7px;flex-wrap:wrap}.chosen{background:#e9f7df;border:2px solid #58cc02;border-radius:8px;padding:8px;font-weight:800}
+.complete{text-align:center;padding:40px 5px}.trophy{font-size:75px}.results{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:22px 0}.results div{background:#fff;border:2px solid #ddd;border-radius:14px;padding:15px}.results b{display:block;font-size:25px;color:#58a700}
+.grid{display:grid;gap:10px}.shopitem,.achievement,.statbox{background:#fff;border:2px solid #ddd;border-radius:15px;padding:16px}.shopitem{display:flex;align-items:center;gap:12px}.bigicon{font-size:32px}.price{color:#c28b00;font-weight:900}.profile{display:flex;gap:14px;align-items:center}.avatar{width:68px;height:68px;border-radius:50%;background:#e9f7df;display:grid;place-items:center;font-size:37px}.statgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.statbox b{display:block;font-size:26px;color:#58a700}.toast{position:fixed;bottom:86px;left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:12px 17px;border-radius:12px;display:none;z-index:50}.toast.show{display:block}
+@media(max-width:650px){.hero{grid-template-columns:1fr}.coursegrid{grid-template-columns:1fr 1fr}h1{font-size:29px}.stats{font-size:11px;gap:6px}nav{gap:27px}.results{grid-template-columns:1fr 1fr}.results div:last-child{grid-column:1/-1}}
+</style>
+</head>
+<body>
+<header><div class="logo">LinguaGo</div><div class="stats"><span>🔥 <b id="streak">1</b></span><span>⭐ <b id="xp">0</b></span><span>🪙 <b id="coins">50</b></span><span>❤️ <b id="hearts">5</b></span></div></header>
+<main>
+
+<section id="home" class="page">
+<div class="card hero"><div><div class="tag">YOUR CURRENT COURSE</div><h1 id="homeTitle">Spanish</h1><p class="muted" id="homeSubtitle">Unit 1 · Greetings</p></div><button class="btn" id="continue">CONTINUE</button></div>
+<div class="card selectedCourse"><div class="courseIcon" id="currentIcon">🇪🇸</div><div class="grow"><b id="currentName">Spanish</b><br><small class="muted" id="currentType">Language · Europe</small></div><button class="secondary change" id="changeCourse">CHANGE</button></div>
+<div class="card"><h2>🗺️ Your path</h2><div class="progress" style="margin:15px 0 8px"><div class="fill" id="fill"></div></div><p class="muted" id="pathText">0 lessons completed</p></div>
+<div id="homePath" class="path"></div>
+</section>
+
+<section id="courses" class="page hidden">
+<div class="card"><div class="tag">CHOOSE WHAT TO LEARN</div><h1>Courses</h1><p class="muted">Pick a language or a specialty. Your progress is saved separately for each course.</p></div>
+<div class="categories" id="categories"></div>
+</section>
+
+<section id="learn" class="page hidden"><div class="card"><div class="tag">LEARN</div><h1 id="learnTitle">Spanish</h1><p class="muted">Complete lessons to unlock more.</p></div><div id="learnPath" class="path"></div></section>
+
+<section id="practice" class="page hidden"><div class="card"><div class="tag">PRACTICE</div><h1>Practice</h1><p class="muted">Review a random lesson from your current course.</p><button class="btn" id="practiceBtn">START PRACTICE</button></div></section>
+
+<section id="shop" class="page hidden"><div class="card"><div class="tag">SHOP</div><h1>Shop</h1><p class="muted">Coins: 🪙 <b id="shopCoins">50</b></p></div><div class="grid">
+<div class="shopitem"><span class="bigicon">❤️</span><div class="grow"><b>Heart refill</b><small>Restore hearts</small></div><b class="price">20 🪙</b><button class="secondary buy" data-buy="heart">BUY</button></div>
+<div class="shopitem"><span class="bigicon">🔥</span><div class="grow"><b>Streak freeze</b><small>Protect your streak</small></div><b class="price">30 🪙</b><button class="secondary buy" data-buy="freeze">BUY</button></div>
+<div class="shopitem"><span class="bigicon">🎨</span><div class="grow"><b>Profile badge</b><small>Unlock a badge</small></div><b class="price">50 🪙</b><button class="secondary buy" data-buy="badge">BUY</button></div>
+</div></section>
+
+<section id="achievements" class="page hidden"><div class="card"><div class="tag">ACHIEVEMENTS</div><h1>Trophies</h1></div><div id="achievementList" class="grid"></div></section>
+
+<section id="profile" class="page hidden"><div class="card profile"><div class="avatar">🦊</div><div><h2>Learner</h2><p class="muted" id="profileCourse">Spanish</p></div></div><div class="statgrid"><div class="statbox"><b id="pXP">0</b>XP</div><div class="statbox"><b id="pStreak">1</b>Day streak</div><div class="statbox"><b id="pLessons">0</b>Lessons</div><div class="statbox"><b id="pCoins">50</b>Coins</div></div><div class="card" style="margin-top:15px"><h2>⚙️ Settings</h2><button class="secondary" style="width:100%" id="reset">RESET ALL PROGRESS</button></div></section>
+
+<section id="lesson" class="page hidden"><div class="lessonTop"><button class="close" id="quit">×</button><div class="progress"><div class="fill" id="lessonFill"></div></div><b id="counter">1/10</b></div><div id="question"></div></section>
+
+<section id="complete" class="page hidden"><div class="complete"><div class="trophy">🏆</div><h1>Lesson complete!</h1><p id="completeText">Great job!</p><div class="results"><div><b id="rScore">0/10</b>Correct</div><div><b id="rXP">0</b>XP earned</div><div><b id="rCoins">0</b>Coins</div></div><button class="btn" id="done">CONTINUE</button></div></section>
+</main>
+
+<nav><button data-page="home" class="active">🏠<small>Home</small></button><button data-page="courses">🌎<small>Courses</small></button><button data-page="practice">🧠<small>Practice</small></button><button data-page="shop">🛒<small>Shop</small></button><button data-page="profile">👤<small>Profile</small></button></nav>
+<div id="toast" class="toast"></div>
+
+<script>
+(function(){
+"use strict";
+const COURSE_INFO={
+spanish:{name:"Spanish",icon:"🇪🇸",group:"Europe",kind:"Language",lessons:["Hello","Thank you","Goodbye","Yes","Please","Good morning","How are you?","My name is...","Numbers","Review"]},
+french:{name:"French",icon:"🇫🇷",group:"Europe",kind:"Language",lessons:["Hello","Thank you","Goodbye","Yes","Please","Good morning","How are you?","My name is...","Numbers","Review"]},
+italian:{name:"Italian",icon:"🇮🇹",group:"Europe",kind:"Language",lessons:["Hello","Thank you","Goodbye","Yes","Please","Good morning","How are you?","My name is...","Numbers","Review"]},
+german:{name:"German",icon:"🇩🇪",group:"Europe",kind:"Language",lessons:["Hello","Thank you","Goodbye","Yes","Please","Good morning","How are you?","My name is...","Numbers","Review"]},
+portuguese:{name:"Portuguese",icon:"🇵🇹",group:"Europe",kind:"Language",lessons:["Hello","Thank you","Goodbye","Yes","Please","Good morning","How are you?","My name is...","Numbers","Review"]},
+chinese:{name:"Chinese",icon:"🇨🇳",group:"Asia",kind:"Language",lessons:["Hello","Thank you","Goodbye","Yes","Please","Good morning","How are you?","My name is...","Numbers","Review"]},
+japanese:{name:"Japanese",icon:"🇯🇵",group:"Asia",kind:"Language",lessons:["Hello","Thank you","Goodbye","Yes","Please","Good morning","How are you?","My name is...","Numbers","Review"]},
+korean:{name:"Korean",icon:"🇰🇷",group:"Asia",kind:"Language",lessons:["Hello","Thank you","Goodbye","Yes","Please","Good morning","How are you?","My name is...","Numbers","Review"]},
+hindi:{name:"Hindi",icon:"🇮🇳",group:"Asia",kind:"Language",lessons:["Hello","Thank you","Goodbye","Yes","Please","Good morning","How are you?","My name is...","Numbers","Review"]},
+vietnamese:{name:"Vietnamese",icon:"🇻🇳",group:"Asia",kind:"Language",lessons:["Hello","Thank you","Goodbye","Yes","Please","Good morning","How are you?","My name is...","Numbers","Review"]},
+english:{name:"English",icon:"🇬🇧",group:"Americas & Other",kind:"Language",lessons:["Hello","Thank you","Goodbye","Yes","Please","Good morning","How are you?","My name is...","Numbers","Review"]},
+violin:{name:"Violin",icon:"🎻",group:"Specialties",kind:"Music",lessons:["Meet the violin","Parts of the violin","Holding the violin","The bow","Open strings","First notes","Rhythm","Simple melody","Practice","Review"]},
+piano:{name:"Piano",icon:"🎹",group:"Specialties",kind:"Music",lessons:["Meet the piano","Keyboard layout","Middle C","Finger numbers","Reading notes","Rhythm","First melody","Chords","Practice","Review"]},
+voice:{name:"Voice",icon:"🎤",group:"Specialties",kind:"Music",lessons:["Meet your voice","Breathing","Posture","Warm-ups","Pitch","Rhythm","Tone","First song","Practice","Review"]}
+};
+const demo={
+spanish:[["How do you say “Hello”?",["Hola","Gracias","Adiós","Sí"],"Hola"],["What does “Gracias” mean?",["Hello","Thank you","Goodbye","Please"],"Thank you"],["Spanish for “Goodbye”?",["Hola","Sí","Adiós","Gracias"],"Adiós"],["What does “Sí” mean?",["No","Yes","Please","Hello"],"Yes"],["Spanish for “Please”?",["Gracias","Por favor","Hola","Adiós"],"Por favor"]],
+french:[["French for “Hello”?",["Bonjour","Merci","Au revoir","Oui"],"Bonjour"],["What does “Merci” mean?",["Hello","Thank you","Goodbye","Please"],"Thank you"],["French for “Goodbye”?",["Bonjour","Oui","Au revoir","Merci"],"Au revoir"],["What does “Oui” mean?",["No","Yes","Please","Hello"],"Yes"],["French for “Please”?",["Merci","S’il vous plaît","Bonjour","Au revoir"],"S’il vous plaît"]]
+};
+let state={course:"spanish",xp:0,streak:1,coins:50,hearts:5,progress:{}};
+try{state=JSON.parse(localStorage.getItem("linguagoV5"))||state}catch(e){}
+let current=0,score=0,locked=false,practiceMode=false;
+const $=x=>document.getElementById(x);
+function course(){return COURSE_INFO[state.course]}
+function courseProgress(){return state.progress[state.course]||0}
+function save(){try{localStorage.setItem("linguagoV5",JSON.stringify(state))}catch(e){}update()}
+function update(){
+let c=course(),pr=courseProgress();$("xp").textContent=state.xp;$("streak").textContent=state.streak;$("coins").textContent=state.coins;$("hearts").textContent=state.hearts;$("shopCoins").textContent=state.coins;
+$("homeTitle").textContent=c.name;$("homeSubtitle").textContent=c.kind+" · "+c.group+" · Unit 1";$("currentIcon").textContent=c.icon;$("currentName").textContent=c.name;$("currentType").textContent=c.kind+" · "+c.group;$("learnTitle").textContent=c.name;$("profileCourse").textContent=c.name+" · "+c.kind;
+$("fill").style.width=(pr/c.lessons.length*100)+"%";$("pathText").textContent=pr+" of "+c.lessons.length+" lessons completed";$("pXP").textContent=state.xp;$("pStreak").textContent=state.streak;$("pLessons").textContent=Object.values(state.progress).reduce((a,b)=>a+b,0);$("pCoins").textContent=state.coins;
+renderPaths();renderAchievements();
+}
+function show(n){document.querySelectorAll(".page").forEach(x=>x.classList.add("hidden"));$(n).classList.remove("hidden");document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===n));update();scrollTo(0,0)}
+function toast(t){$("toast").textContent=t;$("toast").classList.add("show");setTimeout(()=>$("toast").classList.remove("show"),1700)}
+function renderPaths(){
+let c=course(),pr=courseProgress(),s=c.lessons.map((name,i)=>{let done=i<pr,lock=i>pr;return `<button class="node ${done?"done":""} ${lock?"locked":""}" data-i="${i}" ${lock?"disabled":""}><span class="nodecircle">${done?"✓":i+1}</span><span class="nodeinfo"><b>Lesson ${i+1}: ${name}</b><small>${done?"Completed":lock?"Locked":"Start lesson"}</small></span>›</button>`}).join("");
+$("homePath").innerHTML=s;$("learnPath").innerHTML=s;document.querySelectorAll(".node").forEach(b=>b.onclick=()=>startLesson(Number(b.dataset.i)));
+}
+function renderAchievements(){
+let total=Object.values(state.progress).reduce((a,b)=>a+b,0),a=[["🔥","Getting started","Complete 1 lesson",total>=1],["⭐","XP collector","Earn 50 XP",state.xp>=50],["🌎","Explorer","Try 2 courses",Object.keys(state.progress).length>=2],["🎓","Dedicated learner","Complete 10 lessons",total>=10],["🏆","Course master","Complete a full course",Object.keys(COURSE_INFO).some(k=>(state.progress[k]||0)>=10)]];
+$("achievementList").innerHTML=a.map(x=>`<div class="achievement" style="opacity:${x[3]?1:.45}"><span class="bigicon">${x[0]}</span><div class="grow"><b>${x[1]}</b><small>${x[2]}</small></div><b>${x[3]?"✓":"🔒"}</b></div>`).join("");
+}
+function renderCourses(){
+let groups={Asia:[],Europe:[],Americas:[],Specialties:[]};
+Object.entries(COURSE_INFO).forEach(([id,c])=>{let g=c.group==="Europe"?"Europe":c.group==="Asia"?"Asia":c.group==="Specialties"?"Specialties":"Americas";groups[g].push([id,c])});
+let labels={Asia:"🌏 Asia",Europe:"🇪🇺 Europe",Americas:"🌎 Americas & Other",Specialties:"🎓 Specialties"};
+$("categories").innerHTML=Object.entries(groups).map(([g,list])=>`<div class="category"><h2>${labels[g]}</h2><div class="coursegrid">${list.map(([id,c])=>`<button class="course" data-course="${id}"><span class="flag">${c.icon}</span><b>${c.name}</b><small>${c.kind} · ${courseProgressFor(id)}/${c.lessons.length} lessons</small></button>`).join("")}</div></div>`).join("");
+document.querySelectorAll(".course").forEach(b=>b.onclick=()=>selectCourse(b.dataset.course));
+}
+function courseProgressFor(id){return state.progress[id]||0}
+function selectCourse(id){state.course=id;if(state.progress[id]==null)state.progress[id]=0;state.hearts=5;save();show("home");toast(course().name+" selected!")}
+function getQuestions(){
+let d=demo[state.course]||demo.spanish;
+let names=course().lessons;
+let out=[];for(let i=0;i<names.length;i++){let q=d[i%d.length];out.push([names[i],q[0],q[1],q[2]])}return out;
+}
+let questions=[];
+function startLesson(n=courseProgress()){if(n>courseProgress()){toast("Complete the previous lesson first!");return}current=n;score=0;locked=false;practiceMode=false;questions=getQuestions();show("lesson");renderQuestion()}
+function startPractice(){questions=getQuestions();current=Math.floor(Math.random()*questions.length);score=0;locked=false;practiceMode=true;show("lesson");renderQuestion()}
+function renderQuestion(){
+let q=questions[current];$("counter").textContent=(current+1)+"/"+questions.length;$("lessonFill").style.width=(current/questions.length*100)+"%";
+$("question").innerHTML=`<div class="question"><div class="label">${course().kind.toUpperCase()} · ${q[0].toUpperCase()}</div><h2>${q[1]}</h2><div class="answers" id="answers"></div><div id="feedback" class="feedback"></div></div>`;
+q[2].forEach(x=>{let b=document.createElement("button");b.className="answer";b.textContent=x;b.onclick=()=>answer(b,x);$("answers").appendChild(b)})
+}
+function answer(b,x){if(locked)return;locked=true;let q=questions[current],ok=x===q[3];document.querySelectorAll(".answer").forEach(a=>{if(a.textContent===q[3])a.classList.add("correct")});let f=$("feedback");if(ok){score++;state.xp+=10;f.className="feedback show good";f.textContent="Correct! +10 XP ⭐"}else{state.hearts=Math.max(0,state.hearts-1);b.classList.add("wrong");f.className="feedback show bad";f.textContent="Not quite. Answer: "+q[3]}save();setTimeout(()=>{current++;locked=false;if(current<questions.length)renderQuestion();else finishLesson()},700)}
+function finishLesson(){
+if(practiceMode){state.coins+=2;save();toast("Practice complete! +2 🪙");show("practice");return}
+let old=courseProgress();if(old<=current){state.progress[state.course]=Math.min(course().lessons.length,old+1)}
+state.xp+=20;state.coins+=10;save();$("rScore").textContent=score+"/"+questions.length;$("rXP").textContent=score*10+20;$("rCoins").textContent=10;show("complete")
+}
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>{if(b.dataset.page==="courses"){renderCourses();show("courses")}else show(b.dataset.page)});
+$("changeCourse").onclick=()=>{renderCourses();show("courses")};$("continue").onclick=()=>startLesson();$("practiceBtn").onclick=startPractice;$("quit").onclick=()=>show("home");$("done").onclick=()=>show("home");
+$("reset").onclick=()=>{if(confirm("Reset ALL LinguaGo progress?")){state={course:"spanish",xp:0,streak:1,coins:50,hearts:5,progress:{}};save();show("home");toast("Progress reset.")}};
+document.querySelectorAll(".buy").forEach(b=>b.onclick=()=>{let type=b.dataset.buy,c=type==="heart"?20:type==="freeze"?30:50;if(state.coins<c){toast("Not enough coins.");return}state.coins-=c;if(type==="heart")state.hearts=5;save();toast("Purchase complete!")});
+renderCourses();update();
+})();
+</script>
+</body>
+</html>
